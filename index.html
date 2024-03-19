@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Send JSON to API</title>
+    </head>
+    <body>
+        <h1>Enter Item Quantities</h1>
+        <form id="agentForm">
+            <label for="agent">Username:</label>
+            <input
+                id="agent"
+                name="agent"
+                required
+            />
+        </form>
+        <form id="itemForm">
+            <label for="orrizNectar">Orriz Nectar:</label>
+            <input
+                type="number"
+                id="orrizNectar"
+                name="orrizNectar"
+                min="0"
+                required
+            /><br />
+
+            <label for="randoliteBark">Randolite Bark:</label>
+            <input
+                type="number"
+                id="randoliteBark"
+                name="randoliteBark"
+                min="0"
+                required
+            /><br />
+
+            <label for="jenkomeryonLeaf">Jenkomeryon Leaf:</label>
+            <input
+                type="number"
+                id="jenkomeryonLeaf"
+                name="jenkomeryonLeaf"
+                min="0"
+                required
+            /><br />
+
+            <label for="afistaseFruit">Afistase Fruit:</label>
+            <input
+                type="number"
+                id="afistaseFruit"
+                name="afistaseFruit"
+                min="0"
+                required
+            /><br />
+
+            <label for="cabardsonSeed">Cabardson Seed:</label>
+            <input
+                type="number"
+                id="cabardsonSeed"
+                name="cabardsonSeed"
+                min="0"
+                required
+            /><br />
+
+            <label for="hickmoniumBerry">Hickmonium Berry:</label>
+            <input
+                type="number"
+                id="hickmoniumBerry"
+                name="hickmoniumBerry"
+                min="0"
+                required
+            /><br />
+
+            <label for="soipruolitePollen">Soipruolite Pollen:</label>
+            <input
+                type="number"
+                id="soipruolitePollen"
+                name="soipruolitePollen"
+                min="0"
+                required
+            /><br />
+
+            <label for="wheeleaonRoot">Wheeleaon Root:</label>
+            <input
+                type="number"
+                id="wheeleaonRoot"
+                name="wheeleaonRoot"
+                min="0"
+                required
+            /><br />
+
+            <label for="riotaugStem">Friotaug Stem:</label>
+            <input
+                type="number"
+                id="riotaugStem"
+                name="riotaugStem"
+                min="0"
+                required
+            /><br />
+
+            <label for="poifFlower">Poif Flower:</label>
+            <input
+                type="number"
+                id="poifFlower"
+                name="poifFlower"
+                min="0"
+                required
+            /><br />
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <script>
+            const apiUrl = "http://localhost:3000/buy";
+            const formEl = document.getElementById('itemForm');
+            formEl.addEventListener('submit', event => {
+                event.preventDefault();
+                const formData =  new FormData(formEl);
+                const form2 = Object.fromEntries(formData);
+                console.log(form2);
+                let formNum = Object.fromEntries(formData);
+                for (let key in formNum) {
+                    formNum[key] = parseInt(formNum[key]);
+                }
+                console.log(formNum);
+                fetch(apiUrl,{
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(form2)
+                }).then(res => res.json()).then(result => console.log(result));
+            });
+
+        </script>
+    </body>
+</html>
