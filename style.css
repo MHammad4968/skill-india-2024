@@ -16,10 +16,11 @@ form {
     border-radius: 5px;
     color: #333;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 input[type="number"] {
-    width: 100%;
+    width: 50vw;
     padding: 10px;
     margin: 10px 0;
     border-radius: 5px;
