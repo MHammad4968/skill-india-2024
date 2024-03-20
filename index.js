@@ -14,6 +14,7 @@ app.post("/buy", (req, res) => {
         result: utils.generate(10)
     }
     console.log(response);
+    console.log(utils.prettyTime());
     res.writeHead(200, {"Content-Type":"application/json"});
     res.end(JSON.stringify(response));
 });
