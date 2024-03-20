@@ -17,7 +17,6 @@
         min="0"
         required
       /><br />
-
       <label for="randoliteBark">Randolite Bark:</label>
       <input
         type="number"
@@ -26,7 +25,6 @@
         min="0"
         required
       /><br />
-
       <label for="jenkomeryonLeaf">Jenkomeryon Leaf:</label>
       <input
         type="number"
@@ -35,7 +33,6 @@
         min="0"
         required
       /><br />
-
       <label for="afistaseFruit">Afistase Fruit:</label>
       <input
         type="number"
@@ -44,7 +41,6 @@
         min="0"
         required
       /><br />
-
       <label for="cabardsonSeed">Cabardson Seed:</label>
       <input
         type="number"
@@ -53,7 +49,6 @@
         min="0"
         required
       /><br />
-
       <label for="hickmoniumBerry">Hickmonium Berry:</label>
       <input
         type="number"
@@ -62,7 +57,6 @@
         min="0"
         required
       /><br />
-
       <label for="soipruolitePollen">Soipruolite Pollen:</label>
       <input
         type="number"
@@ -71,7 +65,6 @@
         min="0"
         required
       /><br />
-
       <label for="wheeleaonRoot">Wheeleaon Root:</label>
       <input
         type="number"
@@ -80,7 +73,6 @@
         min="0"
         required
       /><br />
-
       <label for="friotaugStem">Friotaug Stem:</label>
       <input
         type="number"
@@ -89,7 +81,6 @@
         min="0"
         required
       /><br />
-
       <label for="poifFlower">Poif Flower:</label>
       <input
         type="number"
@@ -98,14 +89,13 @@
         min="0"
         required
       /><br />
-      <button type="submit">Submit</button>
+      <button type="button" id="submitButton">Submit</button>
     </form>
-
     <script>
       const apiUrl = "http://localhost:3000/buy";
       const formEl = document.getElementById("itemForm");
-      formEl.addEventListener("submit", (event) => {
-        event.preventDefault();
+      const submitButton = document.getElementById("submitButton");
+      submitButton.addEventListener("click", () => {
         const formData = new FormData(formEl);
         userAgent = formData.get("agent");
         console.log(userAgent);
@@ -128,7 +118,8 @@
           body: JSON.stringify(apiPayload),
         })
           .then((res) => res.json())
-          .then((result) => console.log(result));
+          .then((result) => console.log(result))
+          .catch((error) => console.error(error));
       });
     </script>
   </body>
