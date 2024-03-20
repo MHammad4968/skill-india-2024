@@ -2,18 +2,17 @@
 <html>
     <head>
         <title>Send JSON to API</title>
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <h1>Enter Item Quantities</h1>
-        <form id="agentForm">
+        <form id="itemForm">
             <label for="agent">Username:</label>
             <input
                 id="agent"
                 name="agent"
                 required
             />
-        </form>
-        <form id="itemForm">
             <label for="orrizNectar">Orriz Nectar:</label>
             <input
                 type="number"
@@ -89,8 +88,8 @@
             <label for="riotaugStem">Friotaug Stem:</label>
             <input
                 type="number"
-                id="riotaugStem"
-                name="riotaugStem"
+                id="friotaugStem"
+                name="friotaugStem"
                 min="0"
                 required
             /><br />
@@ -113,19 +112,24 @@
             formEl.addEventListener('submit', event => {
                 event.preventDefault();
                 const formData =  new FormData(formEl);
-                const form2 = Object.fromEntries(formData);
-                console.log(form2);
+                userAgent = formData.get("agent");
+                console.log(userAgent);
+                formData.delete("agent");
                 let formNum = Object.fromEntries(formData);
                 for (let key in formNum) {
                     formNum[key] = parseInt(formNum[key]);
                 }
                 console.log(formNum);
+                const apiPayload = {
+                    items:formNum,
+                    agent: userAgent
+                }
                 fetch(apiUrl,{
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify(form2)
+                    body: JSON.stringify(apiPayload)
                 }).then(res => res.json()).then(result => console.log(result));
             });
 
