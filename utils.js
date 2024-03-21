@@ -41,9 +41,9 @@ function prettyTime() {
 function isValidOrder(itemsList) {
   console.log(`called isValidOrder`);
   stocks = getStocks();
+  sumItems = 0;
   for (let key in itemsList) {
     console.log(`Key: ${key}, Stock: ${stocks[key]}, Order: ${itemsList[key]}`);
-
     if (!Number.isInteger(itemsList[key])) {
       console.log("not integer");
       return false;
@@ -54,6 +54,10 @@ function isValidOrder(itemsList) {
       console.log("val too high");
       return false;
     }
+    sumItems+=itemsList[key];
+  }
+  if(sumItems==0){
+    return false;
   }
   return true;
 }
