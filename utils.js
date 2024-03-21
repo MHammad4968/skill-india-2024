@@ -70,10 +70,32 @@ function updateStocks(og, order) {
   });
 }
 
+function addOrder(order, signature) {
+  const data = fs.readFileSync("orders.json", "utf-8");
+  let existing = [];
+  if (data.trim() !== "") {
+    existing = JSON.parse(data);
+    console.log(existing.length + " reeee");
+  } else {
+    console.log("File is empty");
+  }
+  const payload = {
+    id: existing.length + 1,
+    timestamp: prettyTime(),
+    orderData: order,
+    orderSignature: signature,
+  };
+  existing.push(payload);
+  fs.writeFileSync("orders.json", JSON.stringify(existing), (err) => {
+    console.log("Error updating orders file");
+  });
+}
+
 module.exports = {
   generate,
   prettyTime,
   isValidOrder,
   getStocks,
   updateStocks,
+  addOrder,
 };

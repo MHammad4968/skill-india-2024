@@ -23,17 +23,17 @@ app.post("/buy", (req, res) => {
         order[key] = items[key];
       }
       utils.updateStocks(utils.getStocks(), order);
-      console.log(response);
-      console.log(utils.prettyTime());
+      utils.addOrder(req.body, response.result);
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify(response));
-    } else {
-      res.writeHead(500, { "Content-Type": "application/json" });
-      res.end({ error: "invalid input data" });
+    } 
+    else {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: "invalid input data" }));
     }
   } else {
-    res.writeHead(500, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ error: "No Items specified, invalid request." }));
+    res.writeHead(400, { "Content-Type": "application/json" });
+    res.end({ "error": "No Items specified, invalid request." });
   }
 });
 app.listen(3000, () => {
