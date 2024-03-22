@@ -1,5 +1,6 @@
 const fs = require("fs");
 const aws = require("./aws");
+const serverless = require("serverless-http");
 require("dotenv").config()
 
 async function getStocks() {
@@ -111,3 +112,5 @@ module.exports = {
   updateStocks,
   addOrder,
 };
+
+module.exports.handler = serverless(app);

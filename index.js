@@ -5,6 +5,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const fs = require("fs");
+const serverless = require('serverless-http');
 let stocks = {};
 
 app.use(cors());
@@ -40,3 +41,5 @@ app.post("/buy", async (req, res) => {
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });
+
+module.exports.handler = serverless(app);
