@@ -1,9 +1,11 @@
 const fs = require("fs");
+const aws = require("aws-sdk")
+require("dotenv").config()
 
 function getStocks() {
   let stock = {};
   try {
-    const data = fs.readFileSync("stocks.json", "utf-8");
+    const data = fs.readFileSync("tmp/stocks.json", "utf-8");
     const obj = JSON.parse(data);
     for (let key in obj) {
       stock[key] = obj[key];
@@ -67,7 +69,7 @@ function updateStocks(og, order) {
   for (let key in og) {
     modified[key] = og[key] - order[key];
   }
-  fs.writeFile("stocks.json", JSON.stringify(modified), (err) => {
+  fs.writeFile("tmp/stocks.json", JSON.stringify(modified), (err) => {
     if (err) {
       console.log("Error updating stocks.json");
     }
@@ -75,7 +77,7 @@ function updateStocks(og, order) {
 }
 
 function addOrder(order, signature) {
-  const data = fs.readFileSync("orders.json", "utf-8");
+  const data = fs.readFileSync("tmp/orders.json", "utf-8");
   let existing = [];
   if (data.trim() !== "") {
     existing = JSON.parse(data);
@@ -90,9 +92,13 @@ function addOrder(order, signature) {
     orderSignature: signature,
   };
   existing.push(payload);
-  fs.writeFileSync("orders.json", JSON.stringify(existing), (err) => {
+  fs.writeFileSync("tmp/orders.json", JSON.stringify(existing), (err) => {
     console.log("Error updating orders file");
   });
+}
+
+function upload2s3(file){
+
 }
 
 module.exports = {
