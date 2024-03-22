@@ -53,6 +53,8 @@ app.post("/reset", async (req, res) => {
   auth = req.body.auth || false;
   if (auth == process.env.AUTH) {
     utils.resetStocks();
+    fs.writeFileSync("tmp/orders.json", "");
+    aws.uploadToS3("tmp/orders.json", "db");
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ message: "Stocks reset successfully" }));
   } else {

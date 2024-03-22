@@ -104,6 +104,7 @@ function addOrder(order, signature) {
 async function resetStocks(){
   const data = fs.readFileSync("stockpersist.json", "utf-8");
   fs.writeFileSync("tmp/stocks.json", data);
+  aws.uploadToS3("tmp/stocks.json", "db");
 }
 
 

@@ -1,126 +1,69 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Send JSON to API</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <h1>Enter Item Quantities</h1>
-    <form id="itemForm">
-      <label for="agent">Username:</label>
-      <input id="agent" name="agent" required />
-      <label for="orrizNectar">Orriz Nectar:</label>
-      <input
-        type="number"
-        id="orrizNectar"
-        name="orrizNectar"
-        min="0"
-        required
-      /><br />
-      <label for="randoliteBark">Randolite Bark:</label>
-      <input
-        type="number"
-        id="randoliteBark"
-        name="randoliteBark"
-        min="0"
-        required
-      /><br />
-      <label for="jenkomeryonLeaf">Jenkomeryon Leaf:</label>
-      <input
-        type="number"
-        id="jenkomeryonLeaf"
-        name="jenkomeryonLeaf"
-        min="0"
-        required
-      /><br />
-      <label for="afistaseFruit">Afistase Fruit:</label>
-      <input
-        type="number"
-        id="afistaseFruit"
-        name="afistaseFruit"
-        min="0"
-        required
-      /><br />
-      <label for="cabardsonSeed">Cabardson Seed:</label>
-      <input
-        type="number"
-        id="cabardsonSeed"
-        name="cabardsonSeed"
-        min="0"
-        required
-      /><br />
-      <label for="hickmoniumBerry">Hickmonium Berry:</label>
-      <input
-        type="number"
-        id="hickmoniumBerry"
-        name="hickmoniumBerry"
-        min="0"
-        required
-      /><br />
-      <label for="soipruolitePollen">Soipruolite Pollen:</label>
-      <input
-        type="number"
-        id="soipruolitePollen"
-        name="soipruolitePollen"
-        min="0"
-        required
-      /><br />
-      <label for="wheeleaonRoot">Wheeleaon Root:</label>
-      <input
-        type="number"
-        id="wheeleaonRoot"
-        name="wheeleaonRoot"
-        min="0"
-        required
-      /><br />
-      <label for="friotaugStem">Friotaug Stem:</label>
-      <input
-        type="number"
-        id="friotaugStem"
-        name="friotaugStem"
-        min="0"
-        required
-      /><br />
-      <label for="poifFlower">Poif Flower:</label>
-      <input
-        type="number"
-        id="poifFlower"
-        name="poifFlower"
-        min="0"
-        required
-      /><br />
-      <button type="button" id="submitButton">Submit</button>
-    </form>
-    <script>
-      const apiUrl = "http://localhost:3000/buy";
-      const formEl = document.getElementById("itemForm");
-      const submitButton = document.getElementById("submitButton");
-      submitButton.addEventListener("click", () => {
-        const formData = new FormData(formEl);
-        userAgent = formData.get("agent");
-        console.log(userAgent);
-        formData.delete("agent");
-        let formNum = Object.fromEntries(formData);
-        for (let key in formNum) {
-          formNum[key] = parseInt(formNum[key]);
-        }
-        console.log(formNum);
-        const apiPayload = {
-          items: formNum,
-          agent: userAgent,
-        };
-        console.log(`apiPayload: ${apiPayload}`);
-        fetch(apiUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(apiPayload),
-        })
-          .then((res) => res.json())
-          .then((result) => console.log(result))
-          .catch((error) => console.error(error));
-      });
-    </script>
-  </body>
+
+<head>
+  <title>Send JSON to API</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <h1>Enter Item Quantities</h1>
+  <form id="itemForm">
+    <label for="agent">Username:</label>
+    <input id="agent" name="agent" required />
+    <label for="orrizNectar">Orriz Nectar:</label>
+    <input type="number" id="orrizNectar" name="orrizNectar" min="0" required /><br />
+    <label for="randoliteBark">Randolite Bark:</label>
+    <input type="number" id="randoliteBark" name="randoliteBark" min="0" required /><br />
+    <label for="jenkomeryonLeaf">Jenkomeryon Leaf:</label>
+    <input type="number" id="jenkomeryonLeaf" name="jenkomeryonLeaf" min="0" required /><br />
+    <label for="afistaseFruit">Afistase Fruit:</label>
+    <input type="number" id="afistaseFruit" name="afistaseFruit" min="0" required /><br />
+    <label for="cabardsonSeed">Cabardson Seed:</label>
+    <input type="number" id="cabardsonSeed" name="cabardsonSeed" min="0" required /><br />
+    <label for="hickmoniumBerry">Hickmonium Berry:</label>
+    <input type="number" id="hickmoniumBerry" name="hickmoniumBerry" min="0" required /><br />
+    <label for="soipruolitePollen">Soipruolite Pollen:</label>
+    <input type="number" id="soipruolitePollen" name="soipruolitePollen" min="0" required /><br />
+    <label for="wheeleaonRoot">Wheeleaon Root:</label>
+    <input type="number" id="wheeleaonRoot" name="wheeleaonRoot" min="0" required /><br />
+    <label for="friotaugStem">Friotaug Stem:</label>
+    <input type="number" id="friotaugStem" name="friotaugStem" min="0" required /><br />
+    <label for="poifFlower">Poif Flower:</label>
+    <input type="number" id="poifFlower" name="poifFlower" min="0" required /><br />
+    <button type="button" id="submitButton">Submit</button>
+  </form>
+  <script>
+    const apiUrl = "http://localhost:3000/buy";
+    const formEl = document.getElementById("itemForm");
+    const submitButton = document.getElementById("submitButton");
+    submitButton.addEventListener("click", () => {
+      const formData = new FormData(formEl);
+      userAgent = formData.get("agent");
+      console.log(userAgent);
+      formData.delete("agent");
+      let formNum = Object.fromEntries(formData);
+      for (let key in formNum) {
+        formNum[key] = parseInt(formNum[key]);
+      }
+      console.log(formNum);
+      const apiPayload = {
+        items: formNum,
+        agent: userAgent,
+      };
+      console.log(`apiPayload: ${apiPayload}`);
+      fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(apiPayload),
+      })
+        .then((res) => res.json())
+        .then((result) => console.log(result))
+        .catch((error) => console.error(error));
+    });
+  </script>
+</body>
+
 </html>
