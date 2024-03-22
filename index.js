@@ -10,7 +10,7 @@ let stocks = {};
 app.use(cors());
 app.use(express.json());
 
-app.post("/buy", (req, res) => {
+app.post("/buy", async (req, res) => {
   let order = {};
   let items = req.body.items || false;
   console.log(items);
@@ -22,7 +22,8 @@ app.post("/buy", (req, res) => {
       for (let key in items) {
         order[key] = items[key];
       }
-      utils.updateStocks(utils.getStocks(), order);
+      og = await utils.getStocks();
+      utils.updateStocks(og, order);
       utils.addOrder(req.body, response.result);
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify(response));

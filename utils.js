@@ -1,10 +1,11 @@
 const fs = require("fs");
-const aws = require("aws-sdk")
+const aws = require("./aws");
 require("dotenv").config()
 
-function getStocks() {
+async function getStocks() {
   let stock = {};
   try {
+    await aws.getFromS3("db/stocks.json", "tmp");
     const data = fs.readFileSync("tmp/stocks.json", "utf-8");
     const obj = JSON.parse(data);
     for (let key in obj) {
@@ -16,6 +17,7 @@ function getStocks() {
     console.error("Error reading file or parsing JSON:", err);
   }
 }
+
 
 function generate(num) {
   const genset = "abcdefghijklmnopqrstuvwxyz!@#$%&";
@@ -40,9 +42,9 @@ function prettyTime() {
   return `${year}-${month}-${day}-${hours}:${minutes}:${seconds}`;
 }
 
-function isValidOrder(itemsList) {
+async function isValidOrder(itemsList) {
   console.log(`called isValidOrder`);
-  stocks = getStocks();
+  stocks = await getStocks();
   sumItems = 0;
   for (let key in itemsList) {
     console.log(`Key: ${key}, Stock: ${stocks[key]}, Order: ${itemsList[key]}`);
@@ -64,16 +66,18 @@ function isValidOrder(itemsList) {
   return true;
 }
 
-function updateStocks(og, order) {
+async function updateStocks(og, order) {
   modified = {};
   for (let key in og) {
     modified[key] = og[key] - order[key];
   }
-  fs.writeFile("tmp/stocks.json", JSON.stringify(modified), (err) => {
-    if (err) {
-      console.log("Error updating stocks.json");
-    }
-  });
+  try {
+    await fs.promises.writeFile("tmp/stocks.json", JSON.stringify(modified));
+    console.log("Stocks updated successfully");
+    aws.uploadToS3("tmp/stocks.json", "db");
+  } catch (err) {
+    console.log("Error stockUpdate:", err);
+  }
 }
 
 function addOrder(order, signature) {
@@ -97,9 +101,7 @@ function addOrder(order, signature) {
   });
 }
 
-function upload2s3(file){
 
-}
 
 module.exports = {
   generate,
