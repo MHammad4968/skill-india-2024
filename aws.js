@@ -1,6 +1,6 @@
 const aws = require("aws-sdk");
 const fs = require("fs");
-const serverless = require("serverless-http");
+
 const s3 = new aws.S3({
     accessKeyId: process.env.KEY,
     secretAccessKey: process.env.SECRETKEY
@@ -43,4 +43,3 @@ return new Promise((resolve, reject) => {
 });
 } 
 module.exports = { uploadToS3, getFromS3 };
-module.exports.handler = serverless(app);

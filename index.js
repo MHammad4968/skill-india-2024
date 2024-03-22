@@ -38,6 +38,18 @@ app.post("/buy", async (req, res) => {
     res.end({ "error": "No Items specified, invalid request." });
   }
 });
+
+app.get("/stocks", async (req, res) => {
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.end(JSON.stringify(await utils.getStocks()));
+});
+
+app.get("/orders", async (req, res) => {
+  const data = fs.readFileSync("tmp/orders.json", "utf-8");
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.end(JSON.stringify(data));
+})
+
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });
