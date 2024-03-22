@@ -1,41 +1,89 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Reset styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Global styles */
 body {
-    background-color: teal;
-    font-family: Arial, sans-serif;
-    color: white;
-    padding: 20px;
+    font-family: 'Inter', sans-serif;
+    background-color: #f1f5f9;
+    color: #374151;
+    line-height: 1.5;
 }
 
 h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-top: 30px;
+    margin-bottom: 1.5rem;
     text-align: center;
-    color: white;
 }
 
+/* Form styles */
 form {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 5px;
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+input[type="text"],
 input[type="number"] {
-    width: 50vw;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
 }
 
-input[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #6366f1;
+    color: #fff;
+    font-weight: 600;
     border: none;
-    border-radius: 5px;
+    border-radius: 0.25rem;
     cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
 }
 
-input[type="submit"]:hover {
-    background-color: #45a049;
+button:hover {
+    background-color: #4f46e5;
+}
+
+/* Responsiveness */
+@media (max-width: 576px) {
+    form {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Utility classes */
+.mt-4 {
+    margin-top: 1rem;
 }
