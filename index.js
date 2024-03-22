@@ -49,7 +49,17 @@ app.get("/orders", async (req, res) => {
   res.writeHead(200, { "Content-Type": "application/json" });
   res.end(JSON.stringify(data));
 })
-
+app.post("/reset", async (req, res) => {
+  auth = req.body.auth || false;
+  if (auth == process.env.AUTH) {
+    utils.resetStocks();
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ message: "Stocks reset successfully" }));
+  } else {
+    res.writeHead(401, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ error: "Unauthorized" }));
+  }
+});
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });

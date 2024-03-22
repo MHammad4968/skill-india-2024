@@ -101,6 +101,10 @@ function addOrder(order, signature) {
   });
 }
 
+async function resetStocks(){
+  const data = fs.readFileSync("stockpersist.json", "utf-8");
+  fs.writeFileSync("tmp/stocks.json", data);
+}
 
 
 module.exports = {
@@ -110,4 +114,5 @@ module.exports = {
   getStocks,
   updateStocks,
   addOrder,
+  resetStocks
 };
