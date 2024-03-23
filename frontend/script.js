@@ -31,8 +31,13 @@ fetch(orderUrl,{
     const orders = document.getElementById("orders");
     orderArray.forEach(order => {
         const orderDiv = document.createElement('div');
+        itemsList = order.items;
+
         orderDiv.classList.add('order');
-        orderDiv.textContent = `Order: ${order.id}`;
+        orderDiv.innerHTML = `<h3>Order ID: ${order.id}</h3>
+        <p>Timestamp: ${order.timestamp}</p>
+        <p>Agent: ${order.orderData.agent}</p>
+        <p>Signature: ${order.orderSignature} </p>`;
         orders.appendChild(orderDiv);
     });
 });
