@@ -16,7 +16,7 @@ app.post("/buy", async (req, res) => {
   let items = req.body.items || false;
   console.log(items);
   if (items) {
-    if (utils.isValidOrder(items)) {
+    if (await utils.isValidOrder(items)) {
       response = {
         result: utils.generate(10),
       };
@@ -24,8 +24,8 @@ app.post("/buy", async (req, res) => {
         order[key] = items[key];
       }
       og = await utils.getStocks();
-      utils.updateStocks(og, order);
-      utils.addOrder(req.body, response.result);
+      await utils.updateStocks(og, order);
+      await utils.addOrder(req.body, response.result);
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify(response));
     } 
@@ -45,7 +45,8 @@ app.get("/stocks", async (req, res) => {
 });
 
 app.get("/orders", async (req, res) => {
-  const data = fs.readFileSync("/tmp/orders.json", "utf-8");
+  aws.getFromS3("db/orders.json", "tmp");
+  const data = fs.readFileSync("tmp/orders.json", "utf-8");
   res.writeHead(200, { "Content-Type": "application/json" });
   res.end(JSON.stringify(data));
 })
@@ -53,8 +54,8 @@ app.post("/reset", async (req, res) => {
   auth = req.body.auth || false;
   if (auth == process.env.AUTH) {
     utils.resetStocks();
-    fs.writeFileSync("/tmp/orders.json", "");
-    aws.uploadToS3("/tmp/orders.json", "db");
+    fs.writeFileSync("tmp/orders.json", "");
+    await aws.uploadToS3("tmp/orders.json", "db");
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ message: "Stocks reset successfully" }));
   } else {

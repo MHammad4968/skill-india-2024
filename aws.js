@@ -22,7 +22,7 @@ async function uploadToS3(localFile, s3Folder) {
       console.log("Error uploading file:", err);
     }
   }
-function getFromS3(s3FilePath, localFolder) {
+async function getFromS3(s3FilePath, localFolder) {
 return new Promise((resolve, reject) => {
     const params = {
     Bucket: process.env.BUCKET,
