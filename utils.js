@@ -5,8 +5,8 @@ require("dotenv").config()
 async function getStocks() {
   let stock = {};
   try {
-    await aws.getFromS3("db/stocks.json", "tmp");
-    const data = await fs.promises.readFile("tmp/stocks.json", "utf-8");
+    await aws.getFromS3("db/stocks.json", "/tmp");
+    const data = await fs.promises.readFile("/tmp/stocks.json", "utf-8");
     const obj = JSON.parse(data);
     for (let key in obj) {
       stock[key] = obj[key];
@@ -72,16 +72,16 @@ async function updateStocks(og, order) {
     modified[key] = og[key] - order[key];
   }
   try {
-    await fs.promises.writeFile("tmp/stocks.json", JSON.stringify(modified));
+    await fs.promises.writeFile("/tmp/stocks.json", JSON.stringify(modified));
     console.log("Stocks updated successfully");
-    aws.uploadToS3("tmp/stocks.json", "db");
+    aws.uploadToS3("/tmp/stocks.json", "db");
   } catch (err) {
     console.log("Error stockUpdate:", err);
   }
 }
 
 function addOrder(order, signature) {
-  const data = fs.readFileSync("tmp/orders.json", "utf-8");
+  const data = fs.readFileSync("/tmp/orders.json", "utf-8");
   let existing = [];
   if (data.trim() !== "") {
     existing = JSON.parse(data);
@@ -96,15 +96,15 @@ function addOrder(order, signature) {
     orderSignature: signature,
   };
   existing.push(payload);
-  fs.writeFileSync("tmp/orders.json", JSON.stringify(existing), (err) => {
+  fs.writeFileSync("/tmp/orders.json", JSON.stringify(existing), (err) => {
     console.log("Error updating orders file");
   });
 }
 
 async function resetStocks(){
   const data = fs.readFileSync("stockpersist.json", "utf-8");
-  fs.writeFileSync("tmp/stocks.json", data);
-  aws.uploadToS3("tmp/stocks.json", "db");
+  fs.writeFileSync("/tmp/stocks.json", data);
+  aws.uploadToS3("/tmp/stocks.json", "db");
 }
 
 
