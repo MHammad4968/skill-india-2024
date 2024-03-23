@@ -6,7 +6,7 @@ async function getStocks() {
   let stock = {};
   try {
     await aws.getFromS3("db/stocks.json", "tmp");
-    const data = fs.readFileSync("tmp/stocks.json", "utf-8");
+    const data = await fs.promises.readFile("tmp/stocks.json", "utf-8");
     const obj = JSON.parse(data);
     for (let key in obj) {
       stock[key] = obj[key];

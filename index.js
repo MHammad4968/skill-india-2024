@@ -1,6 +1,6 @@
 const utils = require("./utils");
 require("dotenv").config();
-const aws = require("aws-sdk");
+const aws = require("./aws");
 const express = require("express");
 const cors = require("cors");
 const app = express();

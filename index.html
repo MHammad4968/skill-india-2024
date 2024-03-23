@@ -8,7 +8,7 @@
 
 <body>
   <h1>Enter Item Quantities</h1>
-  <form id="itemForm">
+  <form id="itemForm" onsubmit="fn1()">
     <label for="agent">Username:</label>
     <input id="agent" name="agent" required />
     <label for="orrizNectar">Orriz Nectar:</label>
@@ -31,13 +31,14 @@
     <input type="number" id="friotaugStem" name="friotaugStem" min="0" required /><br />
     <label for="poifFlower">Poif Flower:</label>
     <input type="number" id="poifFlower" name="poifFlower" min="0" required /><br />
-    <button type="button" id="submitButton">Submit</button>
+    <button type="submit" id="submitButton" onclick="fn1()">Submit</button>
   </form>
   <script>
     const apiUrl = "http://localhost:3000/buy";
     const formEl = document.getElementById("itemForm");
     const submitButton = document.getElementById("submitButton");
-    submitButton.addEventListener("click", () => {
+    async function fn1() {
+      event.preventDefault();
       const formData = new FormData(formEl);
       userAgent = formData.get("agent");
       console.log(userAgent);
@@ -51,18 +52,15 @@
         items: formNum,
         agent: userAgent,
       };
-      console.log(`apiPayload: ${apiPayload}`);
+      console.log(`apiPayload: `, JSON.stringify(apiPayload));
       fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(apiPayload),
-      })
-        .then((res) => res.json())
-        .then((result) => console.log(result))
-        .catch((error) => console.error(error));
-    });
+      }).then((result) => console.log(result));
+    };
   </script>
 </body>
 
