@@ -15,7 +15,7 @@ fetch(stockUrl,
     stockData = data;
     Object.entries(stockData).forEach(([itemName, quantity]) => {
         const stockDiv = document.createElement('div');
-        stockDiv.textContent = `${itemName}: ${quantity}`;
+        stockDiv.innerHTML = `<b>${itemName}</b>: ${quantity}`;
         stock.appendChild(stockDiv);
       });
   });
